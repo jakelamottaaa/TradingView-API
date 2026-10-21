@@ -4,6 +4,9 @@
 
 [Get started](#get-started) · [Explore examples](examples) · [Read the data API guide](docs/data-api.md)
 
+Fork addition: [native DTC source assessment and Android session import](docs/dtc-assessment.md). Read-only and unqualified for production until account/chart/live checks pass.
+
+
 **Language:** English · [Français](docs/README.fr.md) · [Español](docs/README.es.md) · [Português](docs/README.pt.md)
 
 [![Tests](https://github.com/Mathieu2301/TradingView-API/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Mathieu2301/TradingView-API/actions/workflows/tests.yml) [![npm](https://badgen.net/npm/v/@mathieuc/tradingview)](https://www.npmjs.com/package/@mathieuc/tradingview) [![Stars](https://img.shields.io/github/stars/Mathieu2301/TradingView-API?style=social)](https://github.com/Mathieu2301/TradingView-API)

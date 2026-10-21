@@ -28,14 +28,16 @@
     "llms.txt",
     "examples",
     "scripts/parity.mjs",
-    "bin"
+    "bin",
+    "scripts/dtc-native.mjs",
+    "scripts/dtc-session.mjs"
   ],
   "sideEffects": false,
   "scripts": {
     "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
-    "test": "vitest run",
+    "test": "vitest run && npm run test:dtc",
     "test:bun": "bun test tests/unit",
     "test:watch": "vitest",
     "test:live": "vitest run --config vitest.live.config.ts",
@@ -45,7 +47,11 @@
     "probe:endurance": "npm run build && node scripts/endurance.mjs",
     "probe:parity": "npm run build && node scripts/parity.mjs",
     "probe:account": "npm run build && node scripts/probe-account.mjs",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:dtc": "node --test tests/dtc-*.test.mjs",
+    "dtc:session": "node scripts/dtc-session.mjs",
+    "dtc:inspect": "node --env-file=.env scripts/dtc-native.mjs --inspect-session",
+    "dtc:assess": "node --env-file=.env scripts/dtc-native.mjs"
   },
   "repository": {
     "type": "git",
