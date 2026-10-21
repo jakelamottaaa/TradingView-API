@@ -2,7 +2,7 @@ import type { ChartSession } from '../chart/chart-session.js';
 import type { GraphicsData } from '../chart/graphics.js';
 import type { StrategyReport } from '../chart/strategy.js';
 import type { Study, StudyValue } from '../chart/study.js';
-import type { Candle } from '../chart/types.js';
+import type { Candle, SymbolInfo } from '../chart/types.js';
 import { TradingViewError, toTradingViewError } from '../errors.js';
 import { getIndicator } from '../http/indicators.js';
 import { BuiltInIndicator } from '../indicators/builtin-indicator.js';
@@ -32,6 +32,8 @@ export interface IndicatorQuery extends ChartQuery, OperationOptions {
 
 export interface IndicatorData {
   indicator: Indicator;
+  /** Actual feed/session resolved by this chart, including any substitution. */
+  symbolInfo?: SymbolInfo;
   /** Chart bars, oldest first. */
   candles: Candle[];
   /**
@@ -74,6 +76,7 @@ export async function resolveIndicator(query: IndicatorQuery): Promise<Indicator
 function snapshot(chart: ChartSession, study: Study, plan: HistoryPlan): IndicatorData {
   return {
     indicator: study.indicator,
+    symbolInfo: chart.symbolInfo ? structuredClone(chart.symbolInfo) : undefined,
     candles: selectCandles(chart.candles, plan),
     values: study.values,
     graphics: study.graphics,
