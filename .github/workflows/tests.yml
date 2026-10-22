@@ -39,6 +39,7 @@ jobs:
       with:
         name: unit-coverage
         path: coverage/
+        retention-days: 2
     - run: npm run build
     - run: npm run smoke
 
