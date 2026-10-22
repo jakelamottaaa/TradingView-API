@@ -313,6 +313,11 @@ describe('getSymbolInfo', () => {
 });
 
 describe('indicator data', () => {
+  it('returns the actual chart resolution alongside native study data', async () => {
+    const { clientOptions } = fake();
+    const data = await getIndicatorData({ symbol: 'A', indicator: makePine(), count: 5, clientOptions });
+    expect(data.symbolInfo?.full_name).toBe('A');
+  });
   it('runs a built-in study from its type string', async () => {
     const { server, clientOptions } = fake({ history: 20, studyPlots: 2 });
     const data = await getIndicatorData({
