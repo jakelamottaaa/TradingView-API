@@ -135,7 +135,7 @@ export function parseIndicatorDefinition(result: any, id: string, version: strin
     shortDescription: meta.shortDescription,
     inputs: parseInputs(meta.inputs),
     plots: parsePlots(meta.styles ?? {}, meta.plots ?? []),
-    script: result.ilTemplate,
+    script: result.ilTemplate ?? meta.inputs.find((input: { id: string }) => input.id === 'text')?.defval,
   });
 }
 

@@ -82,11 +82,22 @@ describe('parseIndicatorDefinition', () => {
     }, 'STD%3BTest', 'last');
     expect(indicator.id).toBe('STD;Test');
     expect(indicator.version).toBe('12.0');
+    expect(indicator.toStudyInputs().text).toBe('IL');
     expect(Object.keys(indicator.inputs)).toEqual(['in_0', 'in_1']);
     expect(indicator.inputs.in_0).toMatchObject({ inline: 'Fast_length', internalID: 'Fast_length', value: 9 });
     expect(indicator.inputs.in_1).toMatchObject({ inline: 'mode', internalID: 'modeId', isHidden: true, options: ['A', 'B'] });
     expect(indicator.plots).toEqual({
       plot_0: 'MA_line', plot_1: 'MA_line_2', plot_2: 'MA_line_3', plot_3: 'MA_line_colorer',
     });
+  });
+
+  it('uses the compiled script stored in the text input when ilTemplate is absent', () => {
+    const indicator = parseIndicatorDefinition({
+      metaInfo: {
+        inputs: [{ id: 'text', name: 'ILScript', type: 'text', defval: 'compiled-script' }],
+        plots: [],
+      },
+    }, 'USER;test', '1.0');
+    expect(indicator.toStudyInputs().text).toBe('compiled-script');
   });
 });
