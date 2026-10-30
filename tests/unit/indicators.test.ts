@@ -70,6 +70,7 @@ describe('parseIndicatorDefinition', () => {
         description: 'Test',
         shortDescription: 'T',
         pine: { version: '12.0' },
+        defaults: { inputs: { text: 'metadata-script' } },
         inputs: [
           { id: 'text', name: 'text', defval: 'x', type: 'text' },
           { id: 'pineId', name: 'pineId', defval: 'x', type: 'text' },
@@ -89,6 +90,17 @@ describe('parseIndicatorDefinition', () => {
     expect(indicator.plots).toEqual({
       plot_0: 'MA_line', plot_1: 'MA_line_2', plot_2: 'MA_line_3', plot_3: 'MA_line_colorer',
     });
+  });
+
+  it('uses the compiled script in defaults when the text input default is empty', () => {
+    const indicator = parseIndicatorDefinition({
+      metaInfo: {
+        defaults: { inputs: { text: 'compiled-script' } },
+        inputs: [{ id: 'text', name: 'ILScript', type: 'text', defval: '' }],
+        plots: [],
+      },
+    }, 'USER;test', '1.0');
+    expect(indicator.toStudyInputs().text).toBe('compiled-script');
   });
 
   it('uses the compiled script stored in the text input when ilTemplate is absent', () => {
