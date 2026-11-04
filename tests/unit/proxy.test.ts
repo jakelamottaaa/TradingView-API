@@ -146,8 +146,8 @@ describe.skipIf(bunTooOld)('createProxy over a loopback proxy', () => {
     });
     const wsError = await client.ready.catch((error: unknown) => error);
     expect(wsError).toMatchObject({ code: 'CONNECTION_ERROR' });
-    // Bun's native WebSocket only reports "Proxy connection failed".
-    expect((wsError as Error).message).toMatch(/HTTP 407|Proxy connection failed/);
+    // Bun versions report either a generic proxy failure or the proxy's 407 status.
+    expect((wsError as Error).message).toMatch(/HTTP 407|407 Proxy Authentication Required|Proxy connection failed/);
     expect((wsError as Error).message).not.toContain('wrong-secret-value');
     await client.close();
     // The proxy fixture reports CONNECT attempts through a separate process;
